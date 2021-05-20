@@ -43,7 +43,7 @@
       "type": "object",
       "title": "coc-blade-formatter configuration",
       "properties": {
-        "bladeFormatter.format.enabled": {
+        "bladeFormatter.format.enable": {
           "type": "boolean",
           "default": true,
           "description": "Wheter it enables format"

@@ -44,7 +44,7 @@ function wait(ms: number): Promise<any> {
 
 export async function activate(context: ExtensionContext): Promise<void> {
   const extensionConfig = getConfig();
-  if (!extensionConfig.enabled) return;
+  if (!extensionConfig.enable) return;
 
   context.subscriptions.push(setupErrorHandler());
   const { fileIsIgnored } = ignoreFileHandler(context.subscriptions);

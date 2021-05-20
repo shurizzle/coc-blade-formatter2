@@ -11,7 +11,7 @@ export type BladeFormatterConfig = {
   /**
    * Wheter it enabled format
    */
-  enabled: boolean;
+  enable: boolean;
 
   /**
    * Indent size
