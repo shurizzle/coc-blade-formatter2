@@ -43,10 +43,54 @@
       "type": "object",
       "title": "coc-blade-formatter configuration",
       "properties": {
-        "blade.formatter.enabled": {
+        "bladeFormatter.format.enabled": {
           "type": "boolean",
           "default": true,
-          "description": "Enable coc-blade-formatter extension"
+          "description": "Wheter it enables format"
+        },
+        "bladeFormatter.format.indentSize": {
+          "type": "integer",
+          "default": 4,
+          "markdownDescription": "Indent size"
+        },
+        "bladeFormatter.format.wrapLineLength": {
+          "type": "integer",
+          "default": 120,
+          "markdownDescription": "The length of line wrap size"
+        },
+        "bladeFormatter.format.wrapAttributes": {
+          "type": "string",
+          "default": "auto",
+          "enum": [
+            "auto",
+            "force",
+            "force-aligned",
+            "force-expand-multiline",
+            "aligned-multiple",
+            "preserve",
+            "preserve-aligned"
+          ],
+          "markdownDescription": "The way to wrap attributes"
+        },
+        "bladeFormatter.format.ignorePath": {
+          "type": "string",
+          "default": ".bladeignore",
+          "markdownDescription": "Path to '.bladeignore' or similar"
+        },
+        "bladeFormatter.format.disableSuccessMessage": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Disable the 'Formatted by Blade Formatter' message which is echoed every time a file is successfully formatted"
+        },
+        "bladeFormatter.format.statusItemText": {
+          "type": "string",
+          "default": "Blade Formatter",
+          "markdownDescription": "Text shown in status item."
+        },
+        "bladeFormatter.format.formatterPriority": {
+          "type": "integer",
+          "default": 1,
+          "markdownDescription": "Priority of format provider, default to 1 that higher than other languageserver formatter, change to -1 to make it lower priority."
         }
       }
     },

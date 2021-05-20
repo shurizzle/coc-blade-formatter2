@@ -1,7 +1,5 @@
 import {
-  CancellationToken,
   DocumentFormattingEditProvider,
-  FormattingOptions,
   Range,
   TextDocument,
   TextEdit,
@@ -10,7 +8,7 @@ import {
   workspace,
 } from 'coc.nvim';
 import { addToOutput, safeExecute } from './errorHandler';
-import { BladeFormatConfig } from './types';
+import { BladeFormatterConfig } from './types';
 import { getConfig } from './utils';
 import esm from 'esm';
 const esmRequire = esm(module);
@@ -18,13 +16,11 @@ const { default: Formatter } = esmRequire('blade-formatter/src/formatter');
 
 export async function format(
   text: string,
-  { languageId, uri }: TextDocument,
-  customOptions: Partial<BladeFormatConfig>
+  { languageId, uri }: TextDocument
 ): Promise<string> {
   const u = Uri.parse(uri);
-  const isUntitled = u.scheme == 'untitled';
   const fileName = u.fsPath;
-  const vscodeConfig: BladeFormatConfig = getConfig(u);
+  const vscodeConfig: BladeFormatterConfig = getConfig(u);
 
   if (languageId !== 'blade') {
     window.showMessage(
@@ -33,9 +29,17 @@ export async function format(
     );
   }
 
-  const formatter = new Formatter([]);
+  const options = {
+    indentSize: vscodeConfig.indentSize,
+    wrapLineLenght: vscodeConfig.wrapLineLenght,
+    wrapAttributes: vscodeConfig.wrapAttributes,
+  };
 
-  return safeExecute(formatter.formatContent(text), text, fileName);
+  async function _format(text: string) {
+    return await new Formatter(options).formatContent(text);
+  }
+
+  return safeExecute(_format(text), text, fileName);
 }
 
 function fullDocumentRange(document: TextDocument): Range {
@@ -53,23 +57,18 @@ export default class BladeEditProvider
   constructor(private _fileIsIgnored: (filePath: string) => boolean) {}
 
   public provideDocumentFormattingEdits(
-    document: TextDocument,
-    _options: FormattingOptions,
-    _token: CancellationToken
+    document: TextDocument
   ): Promise<TextEdit[]> {
-    return this._provideEdits(document, {});
+    return this._provideEdits(document);
   }
 
-  private async _provideEdits(
-    document: TextDocument,
-    options: Partial<BladeFormatConfig>
-  ): Promise<TextEdit[]> {
+  private async _provideEdits(document: TextDocument): Promise<TextEdit[]> {
     const fileName = Uri.parse(document.uri).fsPath;
     if (!document.uri.startsWith('untitled') && this._fileIsIgnored(fileName)) {
       return Promise.resolve([]);
     }
 
-    const code = await format(document.getText(), document, options);
+    const code = await format(document.getText(), document);
     const edits: TextEdit[] = [
       {
         range: fullDocumentRange(document),

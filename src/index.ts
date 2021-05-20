@@ -10,11 +10,7 @@ import {
 import BladeEditProvider from './BladeEditProvider';
 import { setupErrorHandler } from './errorHandler';
 import ignoreFileHandler from './ignoreFileHandler';
-
-interface Selectors {
-  rangeLanguageSelector: DocumentSelector;
-  languageSelector: DocumentSelector;
-}
+import { getConfig } from './utils';
 
 function selectorForLanguage(language: string): DocumentSelector {
   return [
@@ -26,25 +22,16 @@ function selectorForLanguage(language: string): DocumentSelector {
 /**
  * Build formatter selectors
  */
-function selectors(): Selectors {
+function selector(): DocumentSelector {
   const language = 'blade';
-  const rangeLanguageSelector = selectorForLanguage(language);
-  const languageSelector = selectorForLanguage(language);
-
-  return {
-    rangeLanguageSelector,
-    languageSelector,
-  };
+  return selectorForLanguage(language);
 }
 
 let formatterHandler: undefined | Disposable;
-let rangeFormatterHandler: undefined | Disposable;
 
 function disposeHandlers(): void {
   formatterHandler?.dispose();
-  rangeFormatterHandler?.dispose();
   formatterHandler = undefined;
-  rangeFormatterHandler = undefined;
 }
 
 function wait(ms: number): Promise<any> {
@@ -56,22 +43,17 @@ function wait(ms: number): Promise<any> {
 }
 
 export async function activate(context: ExtensionContext): Promise<void> {
-  const extensionConfig = workspace.getConfiguration('blade.format');
-  const isEnabled: boolean = extensionConfig.get('enable', true);
-  if (!isEnabled) return;
+  const extensionConfig = getConfig();
+  if (!extensionConfig.enabled) return;
 
-  window.showMessage(`coc-blade-formatter works!`);
   context.subscriptions.push(setupErrorHandler());
   const { fileIsIgnored } = ignoreFileHandler(context.subscriptions);
   const editProvider = new BladeEditProvider(fileIsIgnored);
 
   const statusItem = window.createStatusBarItem(0);
   context.subscriptions.push(statusItem);
-  statusItem.text = extensionConfig.get<string>(
-    'statusItemText',
-    'Blade Formatter'
-  );
-  const priority = extensionConfig.get<number>('formatterPriority', 1);
+  statusItem.text = extensionConfig.statusItemText;
+  const priority = extensionConfig.formatterPriority;
 
   async function checkDocument(): Promise<void> {
     await wait(30);
@@ -85,7 +67,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   function registerFormatter(): void {
     disposeHandlers();
-    const { languageSelector } = selectors();
+    const languageSelector = selector();
 
     formatterHandler = languages.registerDocumentFormatProvider(
       languageSelector,
