@@ -1,0 +1,65 @@
+{
+  "name": "coc-blade-formatter",
+  "version": "0.0.0-development",
+  "description": "blade-formatter (Laravel Blade formatter) extension for coc.nvim",
+  "author": "shurizzle <me@shurizzle.dev>",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "keywords": [
+    "coc.nvim"
+  ],
+  "engines": {
+    "coc": "^0.0.80"
+  },
+  "scripts": {
+    "lint": "eslint src --ext ts",
+    "clean": "rimraf lib",
+    "watch": "tsc --watch",
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "printWidth": 80,
+    "semi": true
+  },
+  "devDependencies": {
+    "@types/node": "^15.3.1",
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.8.2",
+    "coc.nvim": "^0.0.80",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.2.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.1.2"
+  },
+  "activationEvents": [
+    "onLanguage:blade"
+  ],
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "coc-blade-formatter configuration",
+      "properties": {
+        "blade.formatter.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable coc-blade-formatter extension"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "blade.formatter.format",
+        "title": "Format the whole file"
+      }
+    ]
+  },
+  "dependencies": {
+    "blade-formatter": "^1.11.5",
+    "esm": "^3.2.25",
+    "ignore": "^4.0.6"
+  }
+}
