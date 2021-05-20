@@ -249,10 +249,9 @@ balanced-match@^1.0.0:
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
-blade-formatter@^1.11.5:
+blade-formatter@shurizzle/blade-formatter#c2b4393448e6f57b215ad6731313041c7cf8dd9a:
   version "1.11.5"
-  resolved "https://registry.npmjs.org/blade-formatter/-/blade-formatter-1.11.5.tgz"
-  integrity sha512-BtRTC2mbCw0etWomcUHkefqAzInzOYO7FoqyhwQrat9+2PYhF0qcnqjG37UPJggFW0ohqHXsPXwnDYJp7mquhw==
+  resolved "https://codeload.github.com/shurizzle/blade-formatter/tar.gz/c2b4393448e6f57b215ad6731313041c7cf8dd9a"
   dependencies:
     "@prettier/plugin-php" shufo/plugin-php#a18627e03748ee5dd0218b7685a6564672f6c3e7
     aigle "^1.14.1"
@@ -266,8 +265,8 @@ blade-formatter@^1.11.5:
     lodash "^4.17.19"
     php-parser shufo/php-parser#0b7781fdf88be4b8974320cf27af1588c07e2da8
     prettier "^2.2.0"
-    vscode-oniguruma "1.3.1"
-    vscode-textmate "^4.2.2"
+    vscode-oniguruma "1.5.1"
+    vscode-textmate "^5.4.0"
     xregexp "^5.0.1"
     yargs "^16.2.0"
 
@@ -920,11 +919,6 @@ ms@2.1.2:
   resolved "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-nan@^2.14.0:
-  version "2.14.2"
-  resolved "https://registry.npmjs.org/nan/-/nan-2.14.2.tgz"
-  integrity sha512-M2ufzIiINKCuDfBSAUr1vWQ+vuVcA9kqx8JJUsbQi6yf1uGRyb7HfpdfUr5qLXf3B/t8dPvcjhKMmlfnP47EzQ==
-
 natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz"
@@ -943,13 +937,6 @@ once@^1.3.0:
   integrity sha1-WDsap3WWHUsROsF9nFC6753Xa9E=
   dependencies:
     wrappy "1"
-
-oniguruma@^7.2.0:
-  version "7.2.1"
-  resolved "https://registry.npmjs.org/oniguruma/-/oniguruma-7.2.1.tgz"
-  integrity sha512-WPS/e1uzhswPtJSe+Zls/kAj27+lEqZjCmRSjnYk/Z4L2Mu+lJC2JWtkZhPJe4kZeTQfz7ClcLyXlI4J68MG2w==
-  dependencies:
-    nan "^2.14.0"
 
 optionator@^0.9.1:
   version "0.9.1"
@@ -1270,17 +1257,15 @@ v8-compile-cache@^2.0.3:
   resolved "https://registry.npmjs.org/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz"
   integrity sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==
 
-vscode-oniguruma@1.3.1:
-  version "1.3.1"
-  resolved "https://registry.npmjs.org/vscode-oniguruma/-/vscode-oniguruma-1.3.1.tgz"
-  integrity sha512-gz6ZBofA7UXafVA+m2Yt2zHKgXC2qedArprIsHAPKByTkwq9l5y/izAGckqxYml7mSbYxTRTfdRwsFq3cwF4LQ==
+vscode-oniguruma@1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/vscode-oniguruma/-/vscode-oniguruma-1.5.1.tgz#9ca10cd3ada128bd6380344ea28844243d11f695"
+  integrity sha512-JrBZH8DCC262TEYcYdeyZusiETu0Vli0xFgdRwNJjDcObcRjbmJP+IFcA3ScBwIXwgFHYKbAgfxtM/Cl+3Spjw==
 
-vscode-textmate@^4.2.2:
-  version "4.4.0"
-  resolved "https://registry.npmjs.org/vscode-textmate/-/vscode-textmate-4.4.0.tgz"
-  integrity sha512-dFpm2eK0HwEjeFSD1DDh3j0q47bDSVuZt20RiJWxGqjtm73Wu2jip3C2KaZI3dQx/fSeeXCr/uEN4LNaNj7Ytw==
-  dependencies:
-    oniguruma "^7.2.0"
+vscode-textmate@^5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/vscode-textmate/-/vscode-textmate-5.4.0.tgz#4b25ffc1f14ac3a90faf9a388c67a01d24257cd7"
+  integrity sha512-c0Q4zYZkcLizeYJ3hNyaVUM2AA8KDhNCA3JvXY8CeZSJuBdAy3bAvSbv46RClC4P3dSO9BdwhnKEx2zOo6vP/w==
 
 which@^2.0.1:
   version "2.0.2"

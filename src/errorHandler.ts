@@ -42,9 +42,9 @@ export function safeExecute(
 }
 
 export function setupErrorHandler(): Disposable {
-  outputChannel = window.createOutputChannel('blade.format');
+  outputChannel = window.createOutputChannel('bladeFormatter');
 
-  return commands.registerCommand('blade.format.open-output', () => {
+  return commands.registerCommand('bladeFormatter.open-output', () => {
     outputChannel.show();
   });
 }

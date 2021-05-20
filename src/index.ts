@@ -7,10 +7,18 @@ import {
   window,
   workspace,
 } from 'coc.nvim';
+import esm from 'esm';
+import { promises as fs } from 'fs';
 import BladeEditProvider from './BladeEditProvider';
 import { setupErrorHandler } from './errorHandler';
 import ignoreFileHandler from './ignoreFileHandler';
 import { getConfig } from './utils';
+
+// HACK
+globalThis.Response = () => {};
+
+const esmRequire = esm(module);
+const loadWASM = esmRequire('vscode-oniguruma').loadWASM;
 
 function selectorForLanguage(language: string): DocumentSelector {
   return [
@@ -47,6 +55,15 @@ export async function activate(context: ExtensionContext): Promise<void> {
   if (!extensionConfig.enable) return;
 
   context.subscriptions.push(setupErrorHandler());
+  try {
+    const onigPath = esmRequire.resolve('vscode-oniguruma/release/onig.wasm');
+    const wasm = await fs.readFile(onigPath);
+    await loadWASM({ data: { arrayBuffer: () => wasm.buffer } });
+  } catch (err) {
+    window.showMessage('Blade Formatter has failed to instantiate');
+    return;
+  }
+
   const { fileIsIgnored } = ignoreFileHandler(context.subscriptions);
   const editProvider = new BladeEditProvider(fileIsIgnored);
 

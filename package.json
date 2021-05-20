@@ -96,13 +96,14 @@
     },
     "commands": [
       {
-        "command": "blade.formatter.format",
-        "title": "Format the whole file"
+        "command": "bladeFormatter.open-output",
+        "title": "Open the Blade Formatter output channel"
       }
     ]
   },
   "dependencies": {
-    "blade-formatter": "^1.11.5",
+    "blade-formatter": "shurizzle/blade-formatter#c2b4393448e6f57b215ad6731313041c7cf8dd9a",
+    "vscode-oniguruma": "1.5.1",
     "esm": "^3.2.25",
     "ignore": "^4.0.6"
   }
