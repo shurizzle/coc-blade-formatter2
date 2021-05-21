@@ -9,16 +9,13 @@ import {
 } from 'coc.nvim';
 import esm from 'esm';
 import { promises as fs } from 'fs';
+import { loadWASM as onigLoadWASM } from 'vscode-oniguruma';
 import BladeEditProvider from './BladeEditProvider';
 import { setupErrorHandler } from './errorHandler';
 import ignoreFileHandler from './ignoreFileHandler';
 import { getConfig } from './utils';
 
-// HACK
-globalThis.Response = () => {};
-
 const esmRequire = esm(module);
-const loadWASM = esmRequire('vscode-oniguruma').loadWASM;
 
 function selectorForLanguage(language: string): DocumentSelector {
   return [
@@ -50,17 +47,32 @@ function wait(ms: number): Promise<any> {
   });
 }
 
+async function loadWASM(): Promise<void> {
+  const onigPath = esmRequire.resolve('vscode-oniguruma/release/onig.wasm');
+  const { buffer: wasm } = await fs.readFile(onigPath);
+  // HACK: while the module is executed in a separate vm but fs module is
+  // cached the resulting ArrayBuffer may not be and instance of the current
+  // vm's ArrayBuffer so we force the prototype to be the current ArrayBuffer.
+  // Otherwise vscode-oniguruma will not recognize it as an ArrayBuffer and
+  // will fail because it needs Response object that we don't have in nodejs.
+  //
+  // tl;dr: it sucks but it works.
+  if (wasm && !(wasm instanceof ArrayBuffer)) {
+    Object.setPrototypeOf(wasm, ArrayBuffer.prototype);
+  }
+  await onigLoadWASM(wasm);
+}
+
 export async function activate(context: ExtensionContext): Promise<void> {
   const extensionConfig = getConfig();
   if (!extensionConfig.enable) return;
 
   context.subscriptions.push(setupErrorHandler());
   try {
-    const onigPath = esmRequire.resolve('vscode-oniguruma/release/onig.wasm');
-    const wasm = await fs.readFile(onigPath);
-    await loadWASM({ data: { arrayBuffer: () => wasm.buffer } });
+    await loadWASM();
   } catch (err) {
-    window.showMessage('Blade Formatter has failed to instantiate');
+    context.logger.error(err);
+    window.showMessage('Blade Formatter has failed to instantiate', 'error');
     return;
   }
 

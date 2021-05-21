@@ -249,9 +249,9 @@ balanced-match@^1.0.0:
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
-blade-formatter@shurizzle/blade-formatter#c2b4393448e6f57b215ad6731313041c7cf8dd9a:
+blade-formatter@shurizzle/blade-formatter#81c82c8fbec7659876bd4b28c1c91c1c226868b0:
   version "1.11.5"
-  resolved "https://codeload.github.com/shurizzle/blade-formatter/tar.gz/c2b4393448e6f57b215ad6731313041c7cf8dd9a"
+  resolved "https://codeload.github.com/shurizzle/blade-formatter/tar.gz/81c82c8fbec7659876bd4b28c1c91c1c226868b0"
   dependencies:
     "@prettier/plugin-php" shufo/plugin-php#a18627e03748ee5dd0218b7685a6564672f6c3e7
     aigle "^1.14.1"

@@ -102,7 +102,7 @@
     ]
   },
   "dependencies": {
-    "blade-formatter": "shurizzle/blade-formatter#c2b4393448e6f57b215ad6731313041c7cf8dd9a",
+    "blade-formatter": "shurizzle/blade-formatter#81c82c8fbec7659876bd4b28c1c91c1c226868b0",
     "vscode-oniguruma": "1.5.1",
     "esm": "^3.2.25",
     "ignore": "^4.0.6"
